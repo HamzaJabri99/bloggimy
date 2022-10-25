@@ -1,0 +1,88 @@
+$lightviolet:rgb(214, 178, 250);
+$darkviolet:rgb(67, 22, 121);
+$lightGreen:#b9e7e7;
+
+.app {
+    .container {
+
+        //Login & Register pages
+        .auth {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: $lightviolet;
+            height: 100vh;
+            text-align: center;
+
+            h1 {
+                color: $darkviolet;
+                margin-bottom: 20px;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding: 50px;
+                background-color: #ffffff;
+                border-radius: 5px;
+                width: 300px;
+
+                input {
+                    padding: 10px;
+                    border: none;
+                    outline: none;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    font-weight: bolder;
+                    transition: 0.1s ease-out all;
+                    border-bottom: 1px solid $darkviolet;
+
+                    &:focus {
+
+                        border-bottom: 2px solid $darkviolet;
+                    }
+                }
+
+                .buttonHandler {
+                    text-align: center;
+                    margin-top: 20px;
+
+                    button {
+                        padding: 8px;
+                        border: none;
+                        background-color: $darkviolet;
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-weight: bolder;
+                        border-radius: 5px;
+                        width: 80%;
+                        color: white;
+
+                        margin-bottom: 10px;
+
+                        &:active {
+                            transform: translateY(1px);
+                        }
+                    }
+
+                    p {
+                        font-size: 14px;
+                        color: red;
+                        text-align: center;
+                        margin: 0.5rem;
+                    }
+
+                    span {
+                        font-size: 15px;
+                        text-align: center;
+                    }
+
+                }
+
+
+            }
+        }
+    }
+}
