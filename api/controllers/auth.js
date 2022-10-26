@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 export const register = (req, res) => {
   //checking if user exists
 
@@ -19,7 +20,23 @@ export const register = (req, res) => {
   });
 };
 export const login = (req, res) => {
-  return res.json("logged in");
+  //checking if user exists
+  const q = "SELECT*FROM users where username= ?";
+  db.query(q, [req.body.username], (error, data) => {
+    if (error) return res.json(error);
+    if (data.length === 0) return res.status(404).json("user doesn't exists");
+    //checking password
+    const checkPass = bcrypt.compareSync(req.body.password, data[0].password);
+    const { password, ...infos } = data[0];
+    if (!checkPass) return res.status(400).json("Invalid Credentials");
+    const token = jwt.sign({ id: data[0].id }, "tokenKey");
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(infos);
+  });
 };
 export const logout = (req, res) => {
   return res.json("logged out");

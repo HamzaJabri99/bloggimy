@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/authContext";
 const Login = () => {
   const [inputs, setInputs] = useState({
     username: "",
@@ -8,20 +9,24 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user, login } = useContext(AuthContext);
+  console.log(user);
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/login", inputs);
+      login(inputs);
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      setError(error.response.data);
+    }
   };
   return (
     <div className="auth">
       <h1>Sign in</h1>
-      <form action="">
+      <form>
         <input
           type="text"
           placeholder="username"

@@ -24,7 +24,7 @@ const Register = () => {
   return (
     <div className="auth">
       <h1>Create your Account </h1>
-      <form action="/api/auth/register" method="post">
+      <form>
         <input
           type="text"
           placeholder="username"
