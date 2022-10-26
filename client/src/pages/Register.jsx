@@ -48,7 +48,7 @@ const Register = () => {
         />
         <div className="buttonHandler">
           <button onClick={handleSubmit}>Register</button> <br />
-          {error ? <p>{error}</p> : <p></p>}
+          {error && <p>{error}</p>}
           <span>
             Do You Have an account? <Link to={"/login"}>Sign in</Link>
           </span>
