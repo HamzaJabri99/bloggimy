@@ -39,5 +39,11 @@ export const login = (req, res) => {
   });
 };
 export const logout = (req, res) => {
-  return res.json("logged out");
+  res
+    .clearCookie("access_token", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .json("Logged Out!");
 };
