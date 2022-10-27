@@ -23,14 +23,16 @@ const Home = () => {
           return (
             <div className="post" key={item.id}>
               <div className="img">
-                <img src={item.img} alt="" />
+                <img src={`./uploads/${item.img}`} alt="" />
               </div>
               <div className="content">
                 <Link className="link" to={`posts/${item.id}`}>
                   <h1>{item.title}</h1>
                 </Link>
                 <p>{item.desc}</p>
-                <button>Read More..</button>
+                <Link className="link" to={`posts/${item.id}`}>
+                  <button>Read More..</button>
+                </Link>
               </div>
             </div>
           );

@@ -54,7 +54,11 @@ const SingleBlog = () => {
           {user.username === post.username && (
             <>
               <div className="edit">
-                <Link className="link" to={"write/?edit=1"}>
+                <Link
+                  className="link"
+                  to={`/write/?edit=${post?.id}`}
+                  state={post}
+                >
                   <FontAwesomeIcon icon={faPenToSquare} />
                 </Link>
               </div>
