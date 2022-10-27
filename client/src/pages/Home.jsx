@@ -16,6 +16,10 @@ const Home = () => {
     };
     getPosts();
   }, [cat]);
+  const transformDesc = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent;
+  };
   return (
     <div className="home">
       <div className="posts">
@@ -29,7 +33,7 @@ const Home = () => {
                 <Link className="link" to={`posts/${item.id}`}>
                   <h1>{item.title}</h1>
                 </Link>
-                <p>{item.desc}</p>
+                <p>{transformDesc(item.description)}</p>
                 <Link className="link" to={`posts/${item.id}`}>
                   <button>Read More..</button>
                 </Link>

@@ -36,7 +36,7 @@ const SingleBlog = () => {
   return (
     <div className="single">
       <div className="content">
-        <img src={post?.img} alt="" />
+        <img src={`../uploads/${post.img}`} alt="" />
         <div className="user">
           {user.img ? (
             <img src={post.userImg} alt="" />

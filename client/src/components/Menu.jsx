@@ -25,7 +25,7 @@ const Menu = ({ cat }) => {
       {posts.map((item) => {
         return (
           <div className="post" key={item.id}>
-            <img src={item.img} alt="" />
+            <img src={`../uploads/${item.img}`} alt="" />
             <Link className="link" to={`/posts/${item.id}`}>
               <h2>{item.title}</h2>
             </Link>
