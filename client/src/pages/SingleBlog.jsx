@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../context/authContext";
 const SingleBlog = () => {
   const [post, setPost] = useState({});
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
+  const naviagate = useNavigate();
   console.log(postId);
 
   useEffect(() => {
@@ -23,7 +25,14 @@ const SingleBlog = () => {
     };
     getPost();
   }, [postId]);
-  const { user } = useContext(AuthContext);
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/posts/${postId}`);
+      naviagate("/");
+    } catch (error) {
+      console.log();
+    }
+  };
   return (
     <div className="single">
       <div className="content">
@@ -51,7 +60,7 @@ const SingleBlog = () => {
               </div>
               <div className="delete">
                 <Link className="link">
-                  <FontAwesomeIcon icon={faTrashCan} />
+                  <FontAwesomeIcon icon={faTrashCan} onClick={handleDelete} />
                 </Link>
               </div>
             </>
