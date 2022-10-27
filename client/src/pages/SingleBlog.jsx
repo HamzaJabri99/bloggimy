@@ -1,61 +1,64 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+import { AuthContext } from "../context/authContext";
 const SingleBlog = () => {
+  const [post, setPost] = useState({});
+  const location = useLocation();
+  const postId = location.pathname.split("/")[2];
+  console.log(postId);
+
+  useEffect(() => {
+    const getPost = async () => {
+      try {
+        const res = await axios.get(`/posts/${postId}`);
+        setPost(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPost();
+  }, [postId]);
+  const { user } = useContext(AuthContext);
   return (
     <div className="single">
       <div className="content">
-        <img
-          src="https://images.pexels.com/photos/3131634/pexels-photo-3131634.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt=""
-        />
+        <img src={post?.img} alt="" />
         <div className="user">
-          <img
-            src="https://avatars.githubusercontent.com/u/75950318?v=4"
-            alt=""
-          />
+          {user.img ? (
+            <img src={post.userImg} alt="" />
+          ) : (
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+              alt=""
+            />
+          )}
+
           <div className="info">
-            <span>Hamza</span>
-            <p>Posted 3 days ago</p>
+            <span>{post?.userid}</span>
+            <p>Posted {moment(post?.date).fromNow()}</p>
           </div>
-          <div className="edit">
-            <Link className="link" to={"write/?edit=1"}>
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </Link>
-          </div>
-          <div className="delete">
-            <Link className="link">
-              <FontAwesomeIcon icon={faTrashCan} />
-            </Link>
-          </div>
+          {user.username === post.username && (
+            <>
+              <div className="edit">
+                <Link className="link" to={"write/?edit=1"}>
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </Link>
+              </div>
+              <div className="delete">
+                <Link className="link">
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </Link>
+              </div>
+            </>
+          )}
         </div>
-        <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit</h1>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus
-          excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem
-          ratione sit debitis deserunt repellendus numquam ab vel perspiciatis
-          corporis! Lorem, ipsum dolor sit amet consectetur adipisicing elit. A
-          possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea
-          dolorem ratione sit debitis deserunt repellendus numquam ab vel
-          perspiciatis corporis! Lorem, ipsum dolor sit amet consectetur.
-          <br /> <br />
-          adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam
-          facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus
-          numquam ab vel perspiciatis corporis! Lorem, ipsum dolor sit amet
-          consectetur adipisicing elit. A possimus excepturi aliquid nihil
-          cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis
-          deserunt repellendus numquam ab vel perspiciatis corporis!.
-          <br /> <br />
-          adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam
-          facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus
-          numquam ab vel perspiciatis corporis! Lorem, ipsum dolor sit amet
-          consectetur adipisicing elit. A possimus excepturi aliquid nihil
-          cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis
-          deserunt repellendus numquam ab vel perspiciatis corporis!.
-          <br /> <br />
-        </p>
+        <h1>{post?.title}</h1>
+        {post?.description}
       </div>
       <Menu />
     </div>

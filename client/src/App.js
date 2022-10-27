@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Outlet,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import "./style.scss";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -37,7 +32,7 @@ const router = createBrowserRouter([
         element: <Write />,
       },
       {
-        path: "/post/:id",
+        path: "/posts/:id",
         element: <SingleBlog />,
       },
     ],
