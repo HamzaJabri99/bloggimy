@@ -69,7 +69,7 @@ const SingleBlog = () => {
         <h1>{post?.title}</h1>
         {post?.description}
       </div>
-      <Menu />
+      <Menu cat={post.category} />
     </div>
   );
 };
